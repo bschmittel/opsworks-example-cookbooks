@@ -28,11 +28,13 @@ ruby_block "detach from ALB" do
     Chef::Log.info("connection_draining_timeout: #{connection_draining_timeout}")
     Chef::Log.info("state_check_frequency: #{state_check_frequency}")
 
-    stack = search("aws_opsworks_stack").first
-    instance = search("aws_opsworks_instance", "self:true").first
+#    stack = search("aws_opsworks_stack").first
+#    instance = search("aws_opsworks_instance", "self:true").first
 
-    stack_region = stack[:region]
-    ec2_instance_id = instance[:ec2_instance_id]
+#    stack_region = stack[:region]
+#    ec2_instance_id = instance[:ec2_instance_id]
+    stack_region = node["opsworks"]["instance"]["region"]
+    ec2_instance_id = node["opsworks"]["instance"]["aws_instance_id"]
     target_group_arn = node[:alb_helper][:target_group_arn]
 
     Chef::Log.info("Creating ELB client in region #{stack_region}")
